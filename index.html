@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lemström Case 1</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}</script>
+</head>
+<body>
+  <main>
+    <header class="toolbar">
+      <h1>Lemström Case 1</h1>
+      <label>Run <select id="run-select"></select></label>
+      <label>Camera <select id="camera-select">
+        <option value="overview">Overview</option>
+        <option value="video" selected>Video match</option>
+        <option value="saved" disabled>Saved view</option>
+        <option value="custom" disabled>Custom</option>
+      </select></label>
+      <button id="save-camera" type="button">Save view</button>
+      <button id="play" type="button">Play</button>
+      <label class="time-control">Time <input id="time" type="range" min="10" max="460" step="10" value="10"><output id="time-output">10 s</output></label>
+      <span id="status">Loading</span>
+    </header>
+
+    <section class="viewer" aria-label="Three-dimensional simulation view">
+      <canvas id="viewport"></canvas>
+      <div class="video-layer" id="video-layer"><video id="experiment-video" src="media/case1_video.mp4" muted playsinline preload="metadata"></video></div>
+      <div class="video-tools">
+        <label>Video <select id="video-mode"><option value="off">Off</option><option value="corner">Corner</option><option value="overlay" selected>Overlay</option></select></label>
+        <label>Opacity <input id="video-opacity" type="range" min="0" max="1" step="0.05" value="0.20"></label>
+      </div>
+      <aside class="parameter-panel" id="parameter-panel">
+        <h2>Simulation parameters</h2>
+        <table><tbody>
+          <tr><th>history</th><td id="param-history">yes</td></tr>
+          <tr><th>face areas</th><td id="param-face-area">Newell</td></tr>
+          <tr><th>dt</th><td>5×10⁻⁵ s</td></tr>
+          <tr><th>NLResetDt</th><td>0.0125 s</td></tr>
+          <tr><th>ThreadUpdateDt</th><td>0.025 s</td></tr>
+          <tr><th>loadDt</th><td>4.167×10⁻⁴ s</td></tr>
+          <tr><th>kn</th><td>107 MPa</td></tr>
+          <tr><th>cn / ct</th><td>0.75 / 0.75</td></tr>
+          <tr><th>muI / muS</th><td>0.15 / 0.10</td></tr>
+          <tr><th>SigPl</th><td>46 kPa</td></tr>
+          <tr><th>IceH</th><td>0.050 m</td></tr>
+          <tr><th>E / nu</th><td>107 MPa / 0.30</td></tr>
+          <tr><th>sigF / tauF</th><td>44 / 44 kPa</td></tr>
+          <tr><th>Gf</th><td>10 J/m²</td></tr>
+          <tr><th>damp</th><td>0.75</td></tr>
+          <tr><th>mu_beam</th><td>0.34</td></tr>
+          <tr><th>rhoi / rhow</th><td>926 / 1010 kg/m³</td></tr>
+          <tr><th>cdN / cdT</th><td>1.0 / 0.1</td></tr>
+          <tr><th>ice velocity</th><td>0.05 m/s</td></tr>
+          <tr><th>MPI grid</th><td>1 × 1 × 40</td></tr>
+        </tbody></table>
+      </aside>
+      <div class="viewer-info"><span id="particle-count">— bodies</span><span>checkpoint spacing 10 s</span></div>
+      <div class="axis-key" aria-hidden="true"><i class="x"></i>x <i class="y"></i>y <i class="z"></i>z</div>
+    </section>
+
+    <section class="plot-panel" aria-label="Structure force chart">
+      <div class="trace-controls" id="trace-controls" aria-label="Visible plot series"></div>
+      <div id="chart"></div>
+    </section>
+  </main>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
