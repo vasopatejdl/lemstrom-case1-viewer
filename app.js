@@ -172,7 +172,8 @@ function render() {
 resize(); render();
 
 async function decodedBuffer(url) {
-  const response = await fetch(url);
+  // Keep the regenerated mesh and frames on the same cache revision.
+  const response = await fetch(`${url}?v=particle-id-order-1`);
   if (!response.ok) throw new Error(`${response.status} ${url}`);
   const raw = await response.arrayBuffer();
   const bytes = new Uint8Array(raw);
